@@ -52,18 +52,18 @@ def run_simulation(client):
         # Get the required blueprints
         vehicle_bp = bp_lib.filter('cybertruck')[0]
         camera_bp = bp_lib.filter('sensor.camera.rgb')[0]
+        collision_bp = world.get_blueprint_library().find('sensor.other.collision')
 
         # # Configure the blueprints
         camera_bp.set_attribute("image_size_x", '200')
         camera_bp.set_attribute("image_size_y", '150')
-        collision_bp = world.get_blueprint_library().find('sensor.other.collision')
         # Consider adding noise and and blurring with enable_postprocess_effects
         
         
 
         # Spawn our actors
         vehicle = world.spawn_actor(blueprint=vehicle_bp, transform=world.get_map().get_spawn_points()[0])
-        camera = world.spawn_actor(blueprint=camera_bp, transform=carla.Transform(carla.Location(x=1.6, z=1.6)), attach_to=vehicle)
+        camera = world.spawn_actor(blueprint=camera_bp, transform=carla.Transform(carla.Location(x=2.5, z=1.6)), attach_to=vehicle)
         collision = world.spawn_actor(blueprint=collision_bp, transform=carla.Transform(), attach_to=vehicle)
 
         image_queue = Queue()
@@ -108,9 +108,9 @@ def run_simulation(client):
             im_array = np.reshape(im_array, (image_data.height, image_data.width, 4))
             im_array = im_array[:, :, :3][:, :, ::-1]
 
-            # #Save the image using Pillow module.
-            # image = Image.fromarray(im_array)
-            # image.save("../output_data/%08d.png" % image_data.frame)
+            #Save the image using Pillow module.
+            image = Image.fromarray(im_array)
+            image.save("../output_data/%08d.png" % image_data.frame)
 
         #print(collision_data)
     
