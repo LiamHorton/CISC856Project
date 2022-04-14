@@ -1,10 +1,12 @@
-# %% Libraries
+# %% 
+# Libraries
 
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
-# %% Keras Libraries
+# %% 
+# Keras Libraries
 
 from keras.models import Sequential, Model
 from keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization,  MaxPool2D,  LSTM, TimeDistributed, Input
@@ -12,6 +14,7 @@ from keras.utils.vis_utils import plot_model
 
 
 # %%
+#GPU Available?
 
 # gpu_info = !nvidia-smi
 # gpu_info = '\n'.join(gpu_info)
@@ -21,38 +24,38 @@ from keras.utils.vis_utils import plot_model
 #   print(gpu_info)
 
 # %%
-
 # Functional API
-# def CNN_Model():
-#   CNN = Sequential([
-      
-#       # CONVOLUTIONAL LAYER
-#       Conv2D(filters=32, kernel_size=(8,8), strides = 4, input_shape=(227, 227, 12), activation='relu'),
-      
-#       # CONVOLUTIONAL LAYER 2
-#       Conv2D(filters=64, kernel_size=(4,4), strides = 2, activation='relu'),
 
-#       # CONVOLUTIONAL LAYER 3
-#       Conv2D(filters=64, kernel_size=(4,4), strides = (2,2), activation='relu'),
+def CNN_Model():
+  CNN = Sequential([
       
-#       # CONVOLUTIONAL LAYER 4
-#       Conv2D(filters=64, kernel_size=(3,3), strides = 1, activation='relu'),
-
-#       BatchNormalization(),
+      # CONVOLUTIONAL LAYER
+      Conv2D(filters=32, kernel_size=(8,8), strides = 4, input_shape=(227, 227, 12), activation='relu'),
       
-#       # 256 NEURONS IN DENSE HIDDEN LAYER 
-#       Dense(256, activation='relu'),
+      # CONVOLUTIONAL LAYER 2
+      Conv2D(filters=64, kernel_size=(4,4), strides = 2, activation='relu'),
 
-#       # 128 NEURONS IN DENSE HIDDEN LAYER 
-#       Dense(128, activation='relu'),
+      # CONVOLUTIONAL LAYER 3
+      Conv2D(filters=64, kernel_size=(4,4), strides = (2,2), activation='relu'),
       
-#       Flatten(), 
-#   ])
+      # CONVOLUTIONAL LAYER 4
+      Conv2D(filters=64, kernel_size=(3,3), strides = 1, activation='relu'),
 
-#   return CNN
+      BatchNormalization(),
+      
+      # 256 NEURONS IN DENSE HIDDEN LAYER 
+      Dense(256, activation='relu'),
 
-# cnn = CNN_Model()
-# cnn.summary()
+      # 128 NEURONS IN DENSE HIDDEN LAYER 
+      Dense(128, activation='relu'),
+      
+      Flatten(), 
+  ])
+
+  return CNN
+
+cnn = CNN_Model()
+#cnn.summary()
 
 # vector = cnn(x, training=False)
 
