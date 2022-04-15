@@ -10,7 +10,7 @@
 Configure and inspect an instance of CARLA Simulator.
 
 For further details, visit
-https://carla.readthedocs.io/en/latest/configuring_the_simulation/
+https://carla.readthedocpython -s.io/en/latest/configuring_the_simulation/
 """
 
 import glob

@@ -2,7 +2,9 @@ import glob
 import os
 from pickle import TRUE
 from queue import Queue
+import matplotlib.pyplot as plt
 import sys
+import cv2
 
 from zmq import QUEUE
 
@@ -31,7 +33,7 @@ def sensor_callback(data, queue):
 def run_simulation(client):
 
     try:
-        sim_time = 20
+        sim_time = 30
         time_step = 0.1
         
         # Get the world and its information
@@ -55,64 +57,80 @@ def run_simulation(client):
         collision_bp = world.get_blueprint_library().find('sensor.other.collision')
 
         # # Configure the blueprints
-        camera_bp.set_attribute("image_size_x", '200')
-        camera_bp.set_attribute("image_size_y", '150')
+        camera_bp.set_attribute("image_size_x", '128')
+        camera_bp.set_attribute("image_size_y", '72')
         # Consider adding noise and and blurring with enable_postprocess_effects
         
         
 
         # Spawn our actors
         vehicle = world.spawn_actor(blueprint=vehicle_bp, transform=world.get_map().get_spawn_points()[0])
-        camera = world.spawn_actor(blueprint=camera_bp, transform=carla.Transform(carla.Location(x=2.5, z=1.6)), attach_to=vehicle)
+        camera = world.spawn_actor(blueprint=camera_bp, transform=carla.Transform(carla.Location(x=3.0, z=1.2)), attach_to=vehicle)
         collision = world.spawn_actor(blueprint=collision_bp, transform=carla.Transform(), attach_to=vehicle)
 
+        img_stack = []
         image_queue = Queue()
         camera.listen(lambda data: sensor_callback(data, image_queue))
         collision_queue = Queue()
         collision.listen(lambda data: sensor_callback(data, collision_queue))
 
-        turn = False
-        right_turn = False
-        for step in range(int(sim_time/time_step)):
-            if (step+1)%5==0:
-                turn = not(turn)
-                if turn:
-                    right_turn = not(right_turn)
+        steering = 0
+        steering_list=[0, 0.05, -0.05]
+        #for step in range(int(sim_time/time_step)):
+        for step in range(4):
+            if (step+1)%25==0 and step > 100:
+                # turn = not(turn)
+                # if turn:
+                #     right_turn = not(right_turn)
+                vehicle.apply_control(carla.VehicleControl(throttle=0.2, steer=steering))
+                steering = min(max(-0.10, steering + np.random.choice(steering_list, p=[1/3,1/3, 1-2/3])), 0.10)
+            elif step <= 100:
+                vehicle.apply_control(carla.VehicleControl(throttle=0.2, steer=steering))
+
             
-            if turn and right_turn:
-                vehicle.apply_control(carla.VehicleControl(throttle=0.2, steer=0.5))
-            elif turn:
-                vehicle.apply_control(carla.VehicleControl(throttle=0.2, steer=-0.5))
-            else:
-                vehicle.apply_control(carla.VehicleControl(throttle=0.5, steer=0.0))
+            # if turn and right_turn:
+            #     vehicle.apply_control(carla.VehicleControl(throttle=0.2, steer=0.5))
+            # elif turn:
+            #     vehicle.apply_control(carla.VehicleControl(throttle=0.2, steer=-0.5))
+            # else:
+            #     vehicle.apply_control(carla.VehicleControl(throttle=0.5, steer=0.0))
             
 
             world.tick()
             world_frame = world.get_snapshot().frame
 
         
+            image_data = image_queue.get(True, 1.0)
             try:
-                image_data = image_queue.get(True, 1.0)
+                collision_data = collision_queue.get_nowait()
+                collision_value = 1
             except Empty:
-                print("[Warning] Some sensor data has been missed")
-                continue
+                collision_value = 0
 
-            #collision_data = collision_queue.get(True, 1.0)
         
             #output information to the screen
-            sys.stdout.write("\r(%d/%d) Simulation: %d Camera: %d" %
-                (step+1, sim_time/time_step, world_frame, image_data.frame) + ' ')
+            sys.stdout.write("\r(%d/%d) Simulation: %d Camera: %d " %
+                (step+1, sim_time/time_step, world_frame, image_data.frame) + ' ' + str(collision_value) + '    ')
             sys.stdout.flush()
 
-            im_array = np.copy(np.frombuffer(image_data.raw_data, dtype=np.dtype("uint8")))
-            im_array = np.reshape(im_array, (image_data.height, image_data.width, 4))
-            im_array = im_array[:, :, :3][:, :, ::-1]
+            img_array = np.copy(np.frombuffer(image_data.raw_data, dtype=np.dtype("uint8")))
+            img_array = np.reshape(img_array, (image_data.height, image_data.width, 4))
+            gray_img = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
 
-            #Save the image using Pillow module.
-            image = Image.fromarray(im_array)
-            image.save("../output_data/%08d.png" % image_data.frame)
+            if step == 0:
+                img_stack = ((gray_img),)*4
+                img_stack = np.dstack(img_stack)
+            else:
+                img_stack = np.dstack((img_stack[:,:,1:], gray_img))
 
-        #print(collision_data)
+            cv2.imshow('Gray image', gray_img)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+            
+            cv2.imwrite("../output_data/%08d.png" % image_data.frame, gray_img)
+
+
+      
     
     finally:
         # Apply the original settings when exiting.
