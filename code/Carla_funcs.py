@@ -1,6 +1,8 @@
 import glob
 import os
 import sys
+import numpy as np
+import cv2
 
 
 
@@ -23,7 +25,7 @@ def sensor_callback(data, queue):
     """
     queue.put(data)
 
-def setup(collision_queue, image_queue, time_step, img_x, img_y):
+def setup(collision_queue, image_queue, time_step, img_x, img_y, speed = 0.2):
     client = carla.Client('localhost', 2000)
     client.set_timeout(10.0)
 
@@ -46,15 +48,16 @@ def setup(collision_queue, image_queue, time_step, img_x, img_y):
     # # Configure the blueprints
     camera_bp.set_attribute("image_size_x", str(img_x))
     camera_bp.set_attribute("image_size_y", str(img_y))
-    # Consider adding noise and and blurring with enable_postprocess_effects
+    # Consider adding noise and blurring with enable_postprocess_effects
 
     # Spawn our actors
     vehicle = world.spawn_actor(blueprint=vehicle_bp, transform=world.get_map().get_spawn_points()[0])
+    speed_vec = carla.Vector3D(x=speed, y=0.0, z=0.0)
+    vehicle.enable_constant_velocity(speed_vec)
     camera = world.spawn_actor(blueprint=camera_bp, transform=carla.Transform(carla.Location(x=3.0, z=1.2)),
                                attach_to=vehicle)
     collision = world.spawn_actor(blueprint=collision_bp, transform=carla.Transform(), attach_to=vehicle)
 
-    img_stack = []
     camera.listen(lambda data: sensor_callback(data, image_queue))
     collision.listen(lambda data: sensor_callback(data, collision_queue))
 
@@ -62,8 +65,8 @@ def setup(collision_queue, image_queue, time_step, img_x, img_y):
 
     return client, world, vehicle, camera, collision, orig_settings
 
-def take_action(world, vehicle, image_queue, collision_queue, action, speed = 0.2):
-    vehicle.apply_control(carla.VehicleControl(throttle=speed, steer=action))
+def take_action(world, vehicle, image_queue, collision_queue, action):
+    vehicle.apply_control(carla.VehicleControl(steer=action))
     world.tick()
     world.get_snapshot().frame
 
@@ -87,3 +90,16 @@ def close(world, camera, collision, vehicle, orig_settings):
         vehicle.destroy()
     if collision:
         collision.destroy()
+
+def preprocess_img(img, img_stack):
+    img_array = np.copy(np.frombuffer(img.raw_data, dtype=np.dtype("uint8")))
+    img_array = np.reshape(img_array, (img.height, img.width, 4))
+    gray_img = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
+
+    if img_stack is None:
+        img_stack = ((gray_img),) * 4
+        img_stack = np.dstack(img_stack)
+    else:
+        img_stack = np.dstack((img_stack[:, :, 1:], gray_img))
+
+    return img_stack

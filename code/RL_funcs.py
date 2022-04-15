@@ -1,9 +1,9 @@
 import numpy as np
 import random
 
-def cost_function(col_probs, b):
-    cost = np.sum(-1*col_probs)-b
-    return cost
+def reward_function(col_probs):
+    rwd = np.sum(-1*col_probs)
+    return rwd
 
 def generate_actions(action_space, num_actions):
     actions = np.empty([1,num_actions])
@@ -12,8 +12,8 @@ def generate_actions(action_space, num_actions):
         actions[i] = action
     return actions
 
-def best_actions(action_sets, costs):
-    best = np.argmax(costs)
+def best_actions(action_sets, rwds):
+    best = np.argmax(rwds)
     action = action_sets[best]
     return action
 
@@ -25,5 +25,3 @@ def future_prob_of_colision(y):
     #     bs.append(b)
     # b = np.min(bs)
     return b
-
-def create_y_label(y_buffer, y):
