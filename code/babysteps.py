@@ -57,8 +57,8 @@ def run_simulation(client):
         collision_bp = world.get_blueprint_library().find('sensor.other.collision')
 
         # # Configure the blueprints
-        camera_bp.set_attribute("image_size_x", '400')
-        camera_bp.set_attribute("image_size_y", '300')
+        camera_bp.set_attribute("image_size_x", '128')
+        camera_bp.set_attribute("image_size_y", '72')
         # Consider adding noise and and blurring with enable_postprocess_effects
         
         
@@ -103,23 +103,29 @@ def run_simulation(client):
             image_data = image_queue.get(True, 1.0)
             try:
                 collision_data = collision_queue.get_nowait()
-                collision_text = "Collision"
+                collision_value = 1
             except Empty:
-                collision_text = "No Collision"
+                collision_value = 0
 
         
             #output information to the screen
             sys.stdout.write("\r(%d/%d) Simulation: %d Camera: %d " %
-                (step+1, sim_time/time_step, world_frame, image_data.frame) + ' ' + collision_text + '    ')
+                (step+1, sim_time/time_step, world_frame, image_data.frame) + ' ' + str(collision_value) + '    ')
             sys.stdout.flush()
 
             img_array = np.copy(np.frombuffer(image_data.raw_data, dtype=np.dtype("uint8")))
             img_array = np.reshape(img_array, (image_data.height, image_data.width, 4))
             gray_img = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
 
-            # cv2.imshow('Gray image', gray)
-            # cv2.waitKey(0)
-            # cv2.destroyAllWindows()
+            if step == 0:
+                img_stack = ((gray_img),)*4
+                img_stack = np.dstack(img_stack)
+            else:
+                img_stack = np.dstack((img_stack[:,:,1:], gray_img))
+
+            cv2.imshow('Gray image', gray_img)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
             
             cv2.imwrite("../output_data/%08d.png" % image_data.frame, gray_img)
 
