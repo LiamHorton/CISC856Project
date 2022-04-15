@@ -49,6 +49,7 @@ def computationGraph():
     dense_2 = Dense(128, activation='relu')(dense_1)
 
     output_CNN = Flatten()(dense_2)
+    #print(output_CNN.shape[1])
 
     # Action Graph
     inputAction = Input(shape=(8, 1))
