@@ -8,10 +8,9 @@ from tensorflow import keras
 # %% 
 # Keras Libraries
 
-from keras.models import Sequential, Model
-from keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization,  MaxPool2D,  LSTM, TimeDistributed, Input
+from keras.models import Model
+from keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization,  LSTM, Input
 from keras.utils.vis_utils import plot_model
-
 
 # %%
 #GPU Available?
@@ -66,24 +65,34 @@ def computationGraph():
     y_hat = Dense(1, activation='sigmoid')(denseOutputY2)
 
     #Output Graph b_hat
-    denseOutputB1 = Dense(16, activation='relu')(lstm1)
-    denseOutputB2 = Dense(16, activation='relu')(denseOutputB1)
-    b_hat = Dense(1, activation='sigmoid')(denseOutputB2)
+    # denseOutputB1 = Dense(16, activation='relu')(lstm1)
+    # denseOutputB2 = Dense(16, activation='relu')(denseOutputB1)
+    # b_hat = Dense(1, activation='sigmoid')(denseOutputB2)
 
-    model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat, b_hat])
+    #model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat, b_hat])
+    model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat])
 
     return model
 
 model = computationGraph()
-plot_model(model, to_file='convolutional_neural_network.png')
-print(model.summary())
+# plot_model(model, to_file='convolutional_neural_network.png')
+# print(model.summary())
 
-model.compile(loss='binary_crossentropy',
-              optimizer='adam',
-              metrics=['accuracy'])
+# model.compile(loss='binary_crossentropy',
+#               optimizer='adam',
+#               metrics=['accuracy'])
 
 #data = np.array([0.05, 0, -0.05, 0.05, -0.05, 0.05, 0, 0.05]).reshape((1,8,1))
 #print(model.predict(data))
+
+# %%
+# Test
+
+data = np.array([0.05, 0, -0.05, 0.05, -0.05, 0.05, 0, 0.05]).reshape((1,8,1))
+
+img_stack=np.load('test.npy').reshape((1,72,128,4))
+
+model([img_stack, data], training=False)
 
 # %%
 # Kahn CNN Model
