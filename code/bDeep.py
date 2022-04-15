@@ -75,15 +75,8 @@ def computationGraph():
     return model
 
 model = computationGraph()
-# plot_model(model, to_file='convolutional_neural_network.png')
-# print(model.summary())
-
-# model.compile(loss='binary_crossentropy',
-#               optimizer='adam',
-#               metrics=['accuracy'])
-
-#data = np.array([0.05, 0, -0.05, 0.05, -0.05, 0.05, 0, 0.05]).reshape((1,8,1))
-#print(model.predict(data))
+plot_model(model, to_file='Generalized Comutation Graph.png')
+#print(model.summary())
 
 # %%
 # Test
@@ -93,6 +86,10 @@ data = np.array([0.05, 0, -0.05, 0.05, -0.05, 0.05, 0, 0.05]).reshape((1,8,1))
 img_stack=np.load('test.npy').reshape((1,72,128,4))
 
 model([img_stack, data], training=False)
+
+# model.compile(loss='binary_crossentropy',
+#               optimizer='adam',
+#               metrics=['accuracy'])
 
 # %%
 # Kahn CNN Model
