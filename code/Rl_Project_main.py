@@ -31,7 +31,7 @@ from RL_funcs import *
 import Carla_funcs as cf
 import gcg
 
-
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
 # %%
@@ -100,7 +100,7 @@ for i in range(big_loop_counter):
         
         if collided == 1:
             if step+1 >= H:
-                
+                print('Its alive')
                 for i in range(H):
                     y_buffer[H-1-i] = 1
                     y_labels.append(y_buffer.copy())
