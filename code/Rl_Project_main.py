@@ -31,8 +31,6 @@ from RL_funcs import *
 import Carla_funcs as cf
 import gcg
 
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-
 
 # %%
 # RL variables
