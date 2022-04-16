@@ -69,7 +69,7 @@ def computation_graph(H, img_x=128, img_y=72):
 
 def run(model, img_stack, actions):
     actions = np.array(actions).reshape((1, actions.size, 1))
-    img_stack = np.load('test.npy').reshape((1, img_stack.shape[0], img_stack.shape[1], img_stack.shape[2]))
+    img_stack = img_stack.reshape((1, img_stack.shape[0], img_stack.shape[1], img_stack.shape[2]))
     ys = model([img_stack, actions], training=False)
     ys = np.array(ys)[:,:,0]
     return ys

@@ -42,8 +42,9 @@ vehicle_speed = 10
 
 # %%
 # Initialize Network
-
+print('Building GCG')
 model = gcg.computation_graph(H)
+print('GCG Built!')
 
 # %%
 #  Carla Setup
