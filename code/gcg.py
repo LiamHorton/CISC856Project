@@ -5,9 +5,12 @@ from tensorflow import keras
 # %%
 # Keras Libraries
 
-from keras.models import Sequential, Model
-from keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization,  MaxPool2D,  LSTM, TimeDistributed, Input
-from keras.utils.vis_utils import plot_model
+# from keras.models import Model
+# from keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization, LSTM, Input
+# from keras.utils.vis_utils import plot_model
+
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization, LSTM, Input
 
 def computation_graph(H, img_x=128, img_y=72):
     # CNN Input

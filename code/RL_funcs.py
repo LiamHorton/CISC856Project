@@ -1,3 +1,5 @@
+#%%
+
 import numpy as np
 import random
 
@@ -6,10 +8,11 @@ def reward_function(col_probs):
     return rwd
 
 def generate_actions(action_space, num_actions):
-    actions = np.empty([1,num_actions])
+    actions =[]
     for i in range(num_actions):
-        action = random.choices(action_space)
-        actions[i] = action
+        action = random.choice(action_space)
+        actions.append(action)
+    actions=np.array(actions)
     return actions
 
 def best_actions(action_sets, rwds):
@@ -25,3 +28,5 @@ def future_prob_of_colision(y):
     #     bs.append(b)
     # b = np.min(bs)
     return b
+
+# %%
