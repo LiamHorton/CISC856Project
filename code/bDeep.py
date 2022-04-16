@@ -83,7 +83,6 @@ plot_model(model, to_file='Generalized Comutation Graph.png')
 # Test
 
 data = np.array([0.05, 0, -0.05, 0.05, -0.05, 0.05, 0, 0.05])
-#data = [data, data]
 data = np.stack((data, data))
 labels = np.array([0, 0, 0, 0, 0, 0, 1, 1])
 labels = np.stack((labels, labels))
@@ -97,8 +96,6 @@ model.compile(loss='binary_crossentropy',
               metrics=['accuracy'])
 
 model.fit([img, data], labels, epochs=10)
-
-#x = x.numpy
 
 # %%
 # Kahn CNN Model
@@ -165,6 +162,3 @@ model.fit([img, data], labels, epochs=10)
 
 # cnn = CNN_Model()
 # cnn.summary()
-# %%
-
-
