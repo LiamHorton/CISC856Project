@@ -12,7 +12,7 @@ from tensorflow import keras
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization, LSTM, Input
 
-print("Num GPUs Available: ", len(tensorflow.config.list_physical_devices('GPU')))
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 def computation_graph(H, img_x=128, img_y=72):
     # CNN Input
