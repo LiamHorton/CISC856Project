@@ -82,15 +82,23 @@ plot_model(model, to_file='Generalized Comutation Graph.png')
 # %%
 # Test
 
-data = np.array([0.05, 0, -0.05, 0.05, -0.05, 0.05, 0, 0.05]).reshape((1,8,1))
+data = np.array([0.05, 0, -0.05, 0.05, -0.05, 0.05, 0, 0.05])
+#data = [data, data]
+data = np.stack((data, data))
+labels = np.array([0, 0, 0, 0, 0, 0, 1, 1])
+labels = np.stack((labels, labels))
 
-img_stack=np.load('test.npy').reshape((1,72,128,4))
+img_stack=np.load('test.npy')
 
-model([img_stack, data], training=False)
+img = np.stack((img_stack, img_stack))
 
-# model.compile(loss='binary_crossentropy',
-#               optimizer='adam',
-#               metrics=['accuracy'])
+model.compile(loss='binary_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
+
+model.fit([img, data], labels, epochs=10)
+
+#x = x.numpy
 
 # %%
 # Kahn CNN Model
