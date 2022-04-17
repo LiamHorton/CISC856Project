@@ -98,12 +98,16 @@ def setup(time_step, img_x, img_y, speed = 0.2):
             collision.destroy()
     
 
-def take_action(world, vehicle, image_queue, collision_queue, action):
+def take_action(world, vehicle, image_queue, past_image, collision_queue, action):
     vehicle.apply_control(carla.VehicleControl(steer=action))
     world.tick()
     world.get_snapshot().frame
 
-    image_data = image_queue.get(True, 1.0)
+    try:
+        image_data = image_queue.get(True, 1.0)
+    except Empty:
+        image_data = past_image
+    
     try:
         collision_queue.get_nowait()
         collided = 1
