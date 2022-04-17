@@ -127,7 +127,7 @@ for i in range(big_loop_counter):
     if (i % 10 == 0) and (i > 0):
         print('Big Loop iteration - ', i)
     
-    if (i % 50 == 0)and (i > 0):
+    if (i % 20 == 0)and (i > 0):
         model.save('../models/model.tf')
         print('Model saved')
 
