@@ -44,10 +44,10 @@ delta_t = 0.1
 
 # %%
 # Initialize Network
-# model = gcg.computation_graph(H)
-# print('GCG Built!')
-model = gcg.load_old_model('../models/model.tf')
-print('GCG Loaded!')
+model = gcg.computation_graph(H)
+print('GCG Built!')
+# model = gcg.load_old_model('../models/model.tf')
+# print('GCG Loaded!')
 
 
 # %%
@@ -61,7 +61,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # %%
 
 # Begin loop
-big_loop_counter = 2
+big_loop_counter = 5000
 step_max = int((10 * 60) / delta_t)
 img_stack = None
 
