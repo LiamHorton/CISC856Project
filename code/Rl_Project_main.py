@@ -60,7 +60,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 
 # Begin loop
 big_loop_counter = 4000
-step_max = (10 * 60) / delta_t 
+step_max = int((10 * 60) / delta_t)
 img_stack = None
 
 cum_steps = 0
