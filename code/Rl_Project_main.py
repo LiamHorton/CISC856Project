@@ -44,9 +44,8 @@ vehicle_speed = 10
 # %%
 # Initialize Network
 print('Building GCG')
-with tf.device('/cpu:0'):
-    model = gcg.computation_graph(H)
-print('GCG Built!')
+model = gcg.computation_graph(H)
+
 
 # %%
 #  Carla Setup
@@ -59,7 +58,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # %%
 
 # Begin loop
-big_loop_counter = 4000
+big_loop_counter = 100
 step_max = 600
 img_stack = None
 
@@ -122,9 +121,9 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
-    if i % 10 == 0:
-        model.save('../models/model.tf')
-        print(i)
+    # if i % 10 == 0:
+    #     model.save('../models/model.tf')
+    #     print(i)
 
     cf.close(world, camera, collision, vehicle, orig_settings)
     client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = 1, img_x = 128, img_y = 72, speed=vehicle_speed)
