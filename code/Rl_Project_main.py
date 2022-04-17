@@ -122,15 +122,15 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
-    if i % 10 == 0:
+    if (i % 10 == 0):
         print('Big Loop iteration - ', i)
     
-    if i % 100 == 0:
+    if (i % 100 == 0):
         model.save('../models/model.tf')
         print('Model saved')
         
         fig1 = plt.figure()
-        plt.plot(range(big_loop_counter), cum_steps_per_ep)
+        plt.plot(range(i), cum_steps_per_ep)
         plt.xlabel('Episodes')
         plt.ylabel('Cumulative Moves')
         plt.title('Figure 1')
@@ -138,7 +138,7 @@ for i in range(big_loop_counter):
 
 
         fig2 = plt.figure()
-        plt.plot(range(big_loop_counter), steps_per_ep)
+        plt.plot(range(i), steps_per_ep)
         plt.xlabel('Episodes')
         plt.ylabel('Moves')
         plt.title('Figure 2')
