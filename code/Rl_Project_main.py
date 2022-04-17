@@ -57,8 +57,8 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # %%
 
 # Begin loop
-big_loop_counter = 40
-step_max = 300000
+big_loop_counter = 4000
+step_max = 600
 img_stack = None
 
 cum_steps = 0
@@ -100,14 +100,14 @@ for i in range(big_loop_counter):
         if collided == 1:
             if step+1 >= H:
                 print('Its alive')
-                for i in range(H):
-                    y_buffer[H-1-i] = 1
+                for j in range(H):
+                    y_buffer[H-1-j] = 1
                     y_labels.append(y_buffer.copy())
                 break
 
             else:
-                for i in range(step):
-                    y_buffer[H-i-step:] = 1
+                for j in range(step):
+                    y_buffer[H-j-step:] = 1
                     y_labels.append(y_buffer.copy())
                 break
         elif  step+1 >= H:
@@ -120,9 +120,9 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
-    if big_loop_counter % 10 == 0:
+    if i % 10 == 0:
         model.save('../models/model.tf')
-        print(big_loop_counter)
+        print(i)
 
     cf.close(world, camera, collision, vehicle, orig_settings)
     client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = 1, img_x = 128, img_y = 72, speed=vehicle_speed)
