@@ -122,10 +122,10 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
-    if (i % 10 == 0):
+    if (i % 1 == 0):
         print('Big Loop iteration - ', i)
     
-    if (i % 100 == 0):
+    if (i % 5 == 0):
         model.save('../models/model.tf')
         print('Model saved')
         
