@@ -46,7 +46,7 @@ delta_t = 0.1
 # Initialize Network
 # model = gcg.computation_graph(H)
 # print('GCG Built!')
-model = gcg.load_model('../models/model.tfmodel.tf')
+model = gcg.load_model('../models/model.tf')
 print('GCG Loaded!')
 
 

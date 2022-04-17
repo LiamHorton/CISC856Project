@@ -80,6 +80,6 @@ def train(model, data_I, data_a, y_labels):
     y_labels = np.stack(y_labels)
     model.fit([data_I, data_a], y_labels)
 
-def load_model(location = '../models/model.tfmodel.tf'):
+def load_model(location = '../models/model.tf'):
     model = load_model(location)  # load the model from file
     return model
