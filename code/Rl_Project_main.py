@@ -38,8 +38,8 @@ import gcg
 H = 8
 K = 5
 action_space = np.array([-0.2, 0, 0.2])
-vehicle_speed = 10
-delta_t = 0.05
+vehicle_speed = 5
+delta_t = 0.1
 
 
 # %%
@@ -60,7 +60,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 
 # Begin loop
 big_loop_counter = 4000
-step_max = 12000
+step_max = (10 * 60) / delta_t 
 img_stack = None
 
 cum_steps = 0
@@ -95,7 +95,7 @@ for i in range(big_loop_counter):
             action_sets.append(action_input)
     
         best_action_set = best_actions(action_sets, rwd_list)
-        img, collided = cf.take_action(world, vehicle, image_queue, collision_queue, best_action_set[0])
+        img, collided = cf.take_action(world, vehicle, image_queue, img, collision_queue, best_action_set[0])
         dataset_I.append(img_stack)
         dataset_a.append(best_action_set)
         
@@ -127,6 +127,25 @@ for i in range(big_loop_counter):
     
     if i % 100 == 0:
         model.save('../models/model.tf')
+        print('Model saved')
+        
+        fig1 = plt.figure()
+        plt.plot(range(big_loop_counter), cum_steps_per_ep)
+        plt.xlabel('Episodes')
+        plt.ylabel('Cumulative Moves')
+        plt.title('Figure 1')
+        plt.savefig('../images/figure1.png')
+
+
+        fig2 = plt.figure()
+        plt.plot(range(big_loop_counter), steps_per_ep)
+        plt.xlabel('Episodes')
+        plt.ylabel('Moves')
+        plt.title('Figure 2')
+        plt.savefig('../images/figure2.png')
+
+    
+
 
     cf.close(world, camera, collision, vehicle, orig_settings)
     client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = delta_t, img_x = 128, img_y = 72, speed=vehicle_speed)
@@ -135,20 +154,5 @@ for i in range(big_loop_counter):
 # End and exit
 world.apply_settings(orig_settings)
 cf.close(world, camera, collision, vehicle, orig_settings)
-# %%
 
 
-fig1 = plt.figure()
-plt.plot(range(big_loop_counter), cum_steps_per_ep)
-plt.xlabel('Episodes')
-plt.ylabel('Cumulative Moves')
-plt.title('Figure 1')
-plt.savefig('../images/figure1.png')
-
-
-fig2 = plt.figure()
-plt.plot(range(big_loop_counter), steps_per_ep)
-plt.xlabel('Episodes')
-plt.ylabel('Moves')
-plt.title('Figure 2')
-plt.savefig('../images/figure2.png')
