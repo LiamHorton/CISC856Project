@@ -57,7 +57,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # %%
 
 # Begin loop
-big_loop_counter = 10
+big_loop_counter = 40
 step_max = 300000
 img_stack = None
 
@@ -120,11 +120,12 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
+    if big_loop_counter % 10 == 0:
+        model.save('../models/model.tf')
+        print(big_loop_counter)
+
     cf.close(world, camera, collision, vehicle, orig_settings)
     client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = 1, img_x = 128, img_y = 72, speed=vehicle_speed)
-
-# %%
-model.save('../models/model.tf')
 
 # %%
 # End and exit
@@ -147,7 +148,3 @@ plt.xlabel('Episodes')
 plt.ylabel('Moves')
 plt.title('Figure 2')
 plt.savefig('../images/figure2.png')
-
-
-
-# %%
