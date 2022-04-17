@@ -130,7 +130,7 @@ for i in range(big_loop_counter):
         print('Model saved')
         
         fig1 = plt.figure()
-        plt.plot(range(i), cum_steps_per_ep)
+        plt.plot(cum_steps_per_ep)
         plt.xlabel('Episodes')
         plt.ylabel('Cumulative Moves')
         plt.title('Figure 1')
@@ -138,7 +138,7 @@ for i in range(big_loop_counter):
 
 
         fig2 = plt.figure()
-        plt.plot(range(i), steps_per_ep)
+        plt.plot(steps_per_ep)
         plt.xlabel('Episodes')
         plt.ylabel('Moves')
         plt.title('Figure 2')
