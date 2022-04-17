@@ -38,6 +38,7 @@ H = 8
 K = 5
 action_space = np.array([-0.2, 0, 0.2])
 vehicle_speed = 10
+delta_t = 0.05
 
 
 # %%
@@ -51,14 +52,14 @@ print('GCG Built!')
 # image_queue = Queue()
 # collision_queue = Queue()
 
-client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = 1, img_x = 128, img_y = 72, speed=vehicle_speed)
+client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = delta_t, img_x = 128, img_y = 72, speed=vehicle_speed)
     
 
 # %%
 
 # Begin loop
 big_loop_counter = 4000
-step_max = 600
+step_max = 12000
 img_stack = None
 
 cum_steps = 0
@@ -125,7 +126,7 @@ for i in range(big_loop_counter):
         print(i)
 
     cf.close(world, camera, collision, vehicle, orig_settings)
-    client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = 1, img_x = 128, img_y = 72, speed=vehicle_speed)
+    client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = delta_t, img_x = 128, img_y = 72, speed=vehicle_speed)
 
 # %%
 # End and exit
