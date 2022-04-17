@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import sys
 import cv2
 from zmq import QUEUE
+import tensorflow as tf
 
 
 try:
@@ -43,7 +44,8 @@ vehicle_speed = 10
 # %%
 # Initialize Network
 print('Building GCG')
-model = gcg.computation_graph(H)
+with tf.device('/cpu:0'):
+    model = gcg.computation_graph(H)
 print('GCG Built!')
 
 # %%
@@ -57,7 +59,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # %%
 
 # Begin loop
-big_loop_counter = 4000
+big_loop_counter = 100
 step_max = 600
 img_stack = None
 
