@@ -125,6 +125,7 @@ def setup(time_step, img_x, img_y, speed = 0.2):
             collision.destroy()
     
 def spawn_car(world, img_x = 128, img_y = 72, speed = 2):
+    spawn = random.choice([0, 1, 7, 9, 30, 50, 80])
     image_queue = Queue()
     collision_queue = Queue()
     bp_lib = world.get_blueprint_library()
