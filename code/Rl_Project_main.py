@@ -164,7 +164,7 @@ for i in range(big_loop_counter):
 
 # %%
 # End and exit
-world.apply_settings(orig_settings)
+# world.apply_settings(orig_settings)
 cf.close(world, camera, collision, vehicle, orig_settings)
 
 

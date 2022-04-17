@@ -118,7 +118,7 @@ def take_action(world, vehicle, image_queue, past_image, collision_queue, action
 
 def close(world, camera, collision, vehicle, orig_settings):
     # Apply the original settings when exiting.
-    #world.apply_settings(orig_settings)
+    world.apply_settings(orig_settings)
 
     # Destroy the actors in the scene.
     if camera:
