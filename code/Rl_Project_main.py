@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import sys
 import cv2
 from zmq import QUEUE
+import tensorflow as tf
 
 
 try:
@@ -46,6 +47,7 @@ delta_t = 0.05
 print('Building GCG')
 model = gcg.computation_graph(H)
 print('GCG Built!')
+
 
 # %%
 #  Carla Setup
@@ -121,9 +123,9 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
-    if i % 10 == 0:
-        model.save('../models/model.tf')
-        print(i)
+    # if i % 10 == 0:
+    #     model.save('../models/model.tf')
+    #     print(i)
 
     cf.close(world, camera, collision, vehicle, orig_settings)
     client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = delta_t, img_x = 128, img_y = 72, speed=vehicle_speed)
