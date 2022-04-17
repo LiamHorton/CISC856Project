@@ -59,7 +59,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # %%
 
 # Begin loop
-big_loop_counter = 4000
+big_loop_counter = 5000
 step_max = int((10 * 60) / delta_t)
 img_stack = None
 
@@ -122,10 +122,10 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
-    if (i % 1 == 0):
+    if (i % 10 == 0) and (i > 0):
         print('Big Loop iteration - ', i)
     
-    if (i % 5 == 0):
+    if (i % 50 == 0)and (i > 0):
         model.save('../models/model.tf')
         print('Model saved')
         
