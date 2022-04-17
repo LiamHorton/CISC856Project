@@ -67,6 +67,7 @@ def setup(time_step, img_x, img_y, speed = 0.2):
         settings = world.get_settings()
         settings.synchronous_mode = True  # make the server wait for the client
         settings.fixed_delta_seconds = time_step
+        configure_world = 1
         world.apply_settings(settings)
 
 
@@ -123,6 +124,43 @@ def setup(time_step, img_x, img_y, speed = 0.2):
         if collision:
             collision.destroy()
     
+def spawn_car(world, img_x = 128, img_y = 72, speed = 2):
+    image_queue = Queue()
+    collision_queue = Queue()
+    bp_lib = world.get_blueprint_library()
+    # Get the required blueprints
+    get_bp = 1
+    vehicle_bp = bp_lib.filter('cybertruck')[0]
+    camera_bp = bp_lib.filter('sensor.camera.rgb')[0]
+    collision_bp = world.get_blueprint_library().find('sensor.other.collision')
+
+    # # Configure the blueprints
+    conf_bp = 1
+    camera_bp.set_attribute("image_size_x", str(img_x))
+    camera_bp.set_attribute("image_size_y", str(img_y))
+    # Consider adding noise and blurring with enable_postprocess_effects
+
+    # Spawn our actors
+    spawn_actors = 1
+    vehicle = world.spawn_actor(blueprint=vehicle_bp, transform=world.get_map().get_spawn_points()[spawn])
+
+    camera = world.spawn_actor(blueprint=camera_bp, transform=carla.Transform(carla.Location(x=3.0, z=1.2)),
+                               attach_to=vehicle)
+    collision = world.spawn_actor(blueprint=collision_bp, transform=carla.Transform(), attach_to=vehicle)
+
+    camera.listen(lambda data: sensor_callback(data, image_queue))
+    collision.listen(lambda data: sensor_callback(data, collision_queue))
+
+    tick_snapshot = 1
+    world.tick()
+    world.get_snapshot().frame
+
+    speed_vec = 1
+    speed_vec = carla.Vector3D(x=speed, y=0.0, z=0.0)
+    vehicle.enable_constant_velocity(speed_vec)
+
+    return vehicle, camera, collision, image_queue, collision_queue
+
 
 def take_action(world, vehicle, image_queue, past_image, collision_queue, action):
     vehicle.apply_control(carla.VehicleControl(steer=action))

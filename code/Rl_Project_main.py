@@ -160,7 +160,7 @@ for i in range(big_loop_counter):
 
 
     cf.close(world, camera, collision, vehicle, orig_settings)
-    client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = delta_t, img_x = 128, img_y = 72, speed=vehicle_speed)
+    vehicle, camera, collision, image_queue, collision_queue = cf.spawn_car(world= world, img_x = 128, img_y = 72, speed=vehicle_speed)
 
 # %%
 # End and exit
