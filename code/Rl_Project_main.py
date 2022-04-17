@@ -59,7 +59,7 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # %%
 
 # Begin loop
-big_loop_counter = 100
+big_loop_counter = 4000
 step_max = 600
 img_stack = None
 
