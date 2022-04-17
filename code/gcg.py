@@ -9,7 +9,7 @@ from tensorflow import keras
 # from keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization, LSTM, Input
 # from keras.utils.vis_utils import plot_model
 
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNormalization, LSTM, Input
 
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -79,3 +79,7 @@ def train(model, data_I, data_a, y_labels):
     data_a = np.stack(data_a)
     y_labels = np.stack(y_labels)
     model.fit([data_I, data_a], y_labels)
+
+def load_model(location = '../models/model.tfmodel.tf'):
+    model = load_model(location)  # load the model from file
+    return model

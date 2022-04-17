@@ -12,7 +12,7 @@ import sys
 import cv2
 from zmq import QUEUE
 import tensorflow as tf
-
+import json
 
 try:
     sys.path.append(glob.glob('../PythonAPI/carla/dist/carla-*%d.%d-%s.egg' % (
@@ -44,8 +44,10 @@ delta_t = 0.1
 
 # %%
 # Initialize Network
-model = gcg.computation_graph(H)
-print('GCG Built!')
+# model = gcg.computation_graph(H)
+# print('GCG Built!')
+model = gcg.load_model('../models/model.tfmodel.tf')
+print('GCG Loaded!')
 
 
 # %%
@@ -128,6 +130,16 @@ for i in range(big_loop_counter):
     if (i % 50 == 0)and (i > 0):
         model.save('../models/model.tf')
         print('Model saved')
+
+        with open("../images/cum_steps.json", 'w') as f:
+            # indent=2 is not needed but makes the file human-readable
+            # if the data is nested
+            json.dump(cum_steps_per_ep, f, indent=2)
+
+        with open("../images/steps.json", 'w') as f:
+            # indent=2 is not needed but makes the file human-readable
+            # if the data is nested
+            json.dump(steps_per_ep, f, indent=2)
         
         fig1 = plt.figure()
         plt.plot(cum_steps_per_ep)
