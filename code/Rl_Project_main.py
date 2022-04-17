@@ -44,7 +44,6 @@ delta_t = 0.05
 
 # %%
 # Initialize Network
-print('Building GCG')
 model = gcg.computation_graph(H)
 print('GCG Built!')
 
@@ -102,7 +101,7 @@ for i in range(big_loop_counter):
         
         if collided == 1:
             if step+1 >= H:
-                print('Its alive')
+
                 for j in range(H):
                     y_buffer[H-1-j] = 1
                     y_labels.append(y_buffer.copy())
@@ -123,9 +122,11 @@ for i in range(big_loop_counter):
 
     gcg.train(model, dataset_I, dataset_a, y_labels)
     
-    # if i % 10 == 0:
-    #     model.save('../models/model.tf')
-    #     print(i)
+    if i % 10 == 0:
+        print('Big Loop iteration - ', i)
+    
+    if i % 100 == 0:
+        model.save('../models/model.tf')
 
     cf.close(world, camera, collision, vehicle, orig_settings)
     client, world, vehicle, camera, collision, orig_settings, image_queue, collision_queue = cf.setup(time_step = delta_t, img_x = 128, img_y = 72, speed=vehicle_speed)
