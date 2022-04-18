@@ -35,7 +35,7 @@ import gcg
 
 # %%
 # RL variables
-H = 8
+H = 16
 K = 5
 action_space = np.array([-0.2, 0, 0.2])
 vehicle_speed = 5
@@ -114,7 +114,7 @@ for i in range(big_loop_counter):
                     y_buffer[H-j-step:] = 1
                     y_labels.append(y_buffer.copy())
                 break
-        elif  step+1 >= H:
+        elif step+1 >= H:
             y_labels.append(y_buffer.copy())
 
     cum_steps += step
