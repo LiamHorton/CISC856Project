@@ -47,7 +47,7 @@ def computation_graph(H, img_x=128, img_y=72):
     outputAction = Dropout(0.5)(denseAction2)
 
     # LSTM Graph
-    lstm1 = LSTM(output_CNN.shape[1], return_sequences=True)(outputAction, initial_state=[output_CNN, output_CNN])
+    lstm1= LSTM(output_CNN.shape[1], return_sequences=True)(outputAction, initial_state=[output_CNN, output_CNN])
 
     # Output Graph y_hat
     denseOutputY1 = Dense(16, activation='relu')(lstm1)
@@ -55,11 +55,11 @@ def computation_graph(H, img_x=128, img_y=72):
     y_hat = Dense(1, activation='sigmoid')(denseOutputY2)
 
     # Output Graph b_hat
-    # denseOutputB1 = Dense(16, activation='relu')(lstm1)
+    # denseOutputB1 = Dense(16, activation='relu')(h_state)
     # denseOutputB2 = Dense(16, activation='relu')(denseOutputB1)
     # b_hat = Dense(1, activation='sigmoid')(denseOutputB2)
 
-    # model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat, b_hat])
+    #model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat, b_hat])
     model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat])
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
