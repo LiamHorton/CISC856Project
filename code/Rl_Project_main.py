@@ -37,7 +37,7 @@ import gcg
 # RL variables
 H = 16
 K = 5
-action_space = np.array([-0.2, 0, 0.2])
+action_space = np.array([-0.3, 0, 0.3])
 vehicle_speed = 5
 delta_t = 0.1
 
