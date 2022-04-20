@@ -58,7 +58,7 @@ def computationGraph():
     outputAction = Dropout(0.5)(denseAction2)
 
     # LSTM Graph
-    lstm1 = LSTM(5120, return_sequences=True)(outputAction, initial_state=[output_CNN, output_CNN])
+    lstm1, h_state, c_state = LSTM(5120, return_sequences=True, return_state=True)(outputAction, initial_state=[output_CNN, output_CNN])
 
     #Output Graph y_hat
     denseOutputY1 = Dense(16, activation='relu')(lstm1)
@@ -66,17 +66,19 @@ def computationGraph():
     y_hat = Dense(1, activation='sigmoid')(denseOutputY2)
 
     #Output Graph b_hat
-    # denseOutputB1 = Dense(16, activation='relu')(lstm1)
-    # denseOutputB2 = Dense(16, activation='relu')(denseOutputB1)
-    # b_hat = Dense(1, activation='sigmoid')(denseOutputB2)
+    denseOutputB1 = Dense(16, activation='relu')(h_state)
+    denseOutputB2 = Dense(16, activation='relu')(denseOutputB1)
+    b_hat = Dense(1, activation='sigmoid')(denseOutputB2)
 
-    #model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat, b_hat])
-    model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat])
+    model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat, b_hat])
+    #model = Model(inputs=[inputCNN, inputAction], outputs=[y_hat])
 
     return model
 
+# %%
+
 model = computationGraph()
-plot_model(model, to_file='Generalized Comutation Graph.png')
+plot_model(model, to_file='Generalized Comutation Graph.png', rankdir="LR", show_layer_activations=True, dpi=50)
 #print(model.summary())
 
 # %%
