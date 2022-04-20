@@ -1,5 +1,5 @@
 # CISC856Project
-CISC 856 - Term Project
+Final project for CISC 856: Reinforcement learning to use a self-supervied deep reinforcement learning computation graph for robot navigation. 
 
 -setup env
 -using Carla 0.9.13 (Town02 map)
