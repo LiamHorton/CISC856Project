@@ -7,7 +7,7 @@ Final project for CISC 856: Reinforcement learning
 
 ![](images/report.png)
 
-## File List
+## Code List
 ### RL_project_main.py
 Main file used to 
 ### gcg.py
