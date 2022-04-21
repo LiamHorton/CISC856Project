@@ -5,8 +5,6 @@ Final project for CISC 856: Reinforcement learning
 -setup env
 -using Carla 0.9.13 (Town02 map)
 
-![](images/report.png)
-
 <p align="center">
   <img src="images/report.png" />
    </br>
