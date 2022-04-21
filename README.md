@@ -6,6 +6,7 @@ Final project for CISC 856: Reinforcement learning
 -using Carla 0.9.13 (Town02 map)
 
 ![](images/report.png)
+
 a) Simulation enviornment b) On-board camera
 
 ## Code List
