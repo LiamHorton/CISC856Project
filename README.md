@@ -11,7 +11,6 @@ Final project for CISC 856: Reinforcement learning
    a) Simulation enviornment b) On-board camera
 </p>
 
-a) Simulation enviornment b) On-board camera
 
 ## Code List
 ### RL_project_main.py
