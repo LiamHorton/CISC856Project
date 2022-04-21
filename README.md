@@ -7,6 +7,18 @@ Final project for CISC 856: Reinforcement learning
 
 ![](images/report.png)
 
+## File List
+### RL_project_main.py
+Main file used to 
+### gcg.py
+
+### RL_funcs.py
+
+### config.py
+
+### Carla_funcs.py
+
+
 ## Contributors
 Riley Cooper - Electrical and Computer Engineering  
 Jason Harris - Electrical and Computer Engineering  
