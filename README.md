@@ -7,6 +7,12 @@ Final project for CISC 856: Reinforcement learning
 
 ![](images/report.png)
 
+<p align="center">
+  <img src="images/report.png" />
+   </br>
+   a) Simulation enviornment b) On-board camera
+</p>
+
 a) Simulation enviornment b) On-board camera
 
 ## Code List
