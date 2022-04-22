@@ -2,8 +2,7 @@
 Final project for CISC 856: Reinforcement learning 
 
 
--setup env
--using Carla 0.9.13 (Town02 map)
+-Simulation enviornment: Carla 0.9.13 (Town02 map)
 
 <p align="center">
   <img src="images/report.png" />
@@ -16,6 +15,7 @@ Final project for CISC 856: Reinforcement learning
 ### RL_project_main.py
 Main file used to 
 ### gcg.py
+Code to implement the generalized computation graph which is initialized for robot navigation, we have implemented a RNN for the task of collision avoidance over a short predictive horizon.
 
 ### RL_funcs.py
 
