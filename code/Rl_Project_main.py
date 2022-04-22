@@ -64,8 +64,8 @@ client, world, vehicle, camera, collision, orig_settings, image_queue, collision
 # ITERATE THROUGH A PREDIFIEND SET OF EPISODES
 
 # Define the number of episodes
-#big_loop_counter = 4000
-big_loop_counter = 2
+big_loop_counter = 4000
+#big_loop_counter = 2
 
 # Target a collision free runtime of 10 minutes
 step_max = int((10 * 60) / delta_t)
