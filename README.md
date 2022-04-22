@@ -33,7 +33,18 @@ Code to implement the generalized computation which uses a Recurrent Neural Netw
 ## How to Run
 
 1. Download CARLA Simulator from https://carla.org/ (The project was implemented using release 0.9.13 for Windows and 0.9.12 for Ubuntu)
-    1. Ensure CARLA Simulator Python API requirements are met in your environment (check \CARLA_0.9.XX\PythonAPI\carla\requirments.txt)
+    * Ensure CARLA Simulator Python API requirements are met in your environment (check \CARLA_0.9.XX\PythonAPI\carla\requirments.txt)
+2. It is highly recommended that you execute the code using a GPU.  The code was setup for TensorFlow 2.3 so that the Numpy version requirements could be met for both the CARLA Simulator and TensorFlow
+3. Ensure the project's dependencies are met using project_requirments.txt
+4. Copy the PythonAPI and all subfolders into your project directory (in parallel with our code directory)
+5. Launch the CARLA Server (rendering off screen is recommended) from your CARLA install
+    * CarlaUE4.exe -RenderOffScreen for Windows
+    * ./CarlaUE4.sh - RenderOffScreen for Ubuntu
+6. Launch your virtual environment (if you're using one)
+7. Configure the CARLA server to run Town02 map from the code subfolder in your project directory
+    * python config.py -m Town02
+8. Run our main code:
+    * python Rl_Project_main.py
 
 
 
