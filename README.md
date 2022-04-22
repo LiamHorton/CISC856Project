@@ -22,7 +22,7 @@ We implemented a self-supervised deep reinforcement learning algorithm on a simu
 ### RL_project_main.py
 Main file used to 
 ### gcg.py
-Code to implement the generalized computation which uses a Recurrent Neural Network (RNN) for the task of collision avoidance over a short predictive horizon.
+Code to implement the generalized computation graph which uses a Recurrent Neural Network (RNN) for the task of collision avoidance over a short predictive horizon.
 
 ### RL_funcs.py
 
@@ -34,7 +34,7 @@ Code to implement the generalized computation which uses a Recurrent Neural Netw
 
 1. Download CARLA Simulator from https://carla.org/ (The project was implemented using release 0.9.13 for Windows and 0.9.12 for Ubuntu)
     * Ensure CARLA Simulator Python API requirements are met in your environment (check \CARLA_0.9.XX\PythonAPI\carla\requirments.txt)
-2. It is highly recommended that you execute the code using a GPU.  The code was setup for TensorFlow 2.3.1 so that the Numpy version requirements could be met for both the CARLA Simulator and TensorFlow
+2. It is highly recommended that you execute the code using a GPU.  The code was setup for TensorFlow-gpu 2.3.1 so that the Numpy version requirements could be met for both the CARLA Simulator and TensorFlow
     * for a CPU implementation (for training) ensure the project's dependencies are met using project_requirments.txt
     * for a GPU implementation (for training) ensure the project's dependencies are met using carla.yml
 4. Copy the PythonAPI and all subfolders into your project directory (in parallel with our code directory)
