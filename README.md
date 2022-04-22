@@ -30,6 +30,11 @@ Code to implement the generalized computation which uses a Recurrent Neural Netw
 
 ### Carla_funcs.py
 
+## How to Run
+
+Markup : 1. Download CARLA Simulator from https://carla.org/ (The project was implemented using release 0.9.13 for Windows and 0.9.12 for Ubuntu)
+
+
 
 ## Contributors
 Riley Cooper - Electrical and Computer Engineering  
