@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow import keras
+# from tensorflow import keras
 
 # %%
 # Keras Libraries
@@ -15,6 +15,7 @@ from tensorflow.keras.layers import  Dropout, Flatten, Dense, Conv2D, BatchNorma
 
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
+# Generate the CNN/LSTM model
 def computation_graph(H, img_x=128, img_y=72):
     # CNN Input
     inputCNN = Input(shape=(img_y, img_x, 4))
@@ -55,7 +56,7 @@ def computation_graph(H, img_x=128, img_y=72):
     denseOutputY2 = Dense(16, activation='relu')(denseOutputY1)
     y_hat = Dense(1, activation='sigmoid')(denseOutputY2)
 
-    # Output Graph b_hat
+    # Output Graph b_hat (preliminary implementation)
     # denseOutputB1 = Dense(16, activation='relu')(h_state)
     # denseOutputB2 = Dense(16, activation='relu')(denseOutputB1)
     # b_hat = Dense(1, activation='sigmoid')(denseOutputB2)
@@ -68,6 +69,7 @@ def computation_graph(H, img_x=128, img_y=72):
 
     return model
 
+# Make an inference using the model
 def run(model, img_stack, actions):
     actions = np.array(actions).reshape((1, actions.size, 1))
     img_stack = img_stack.reshape((1, img_stack.shape[0], img_stack.shape[1], img_stack.shape[2]))
@@ -75,12 +77,14 @@ def run(model, img_stack, actions):
     ys = np.array(ys)[:,:,0]
     return ys
 
+# Train the model
 def train(model, data_I, data_a, y_labels):
     data_I = np.stack(data_I)
     data_a = np.stack(data_a)
     y_labels = np.stack(y_labels)
     model.fit([data_I, data_a], y_labels)
 
+# Load an existing model (used for timeouts and troubleshooting run-time errors)
 def load_old_model(location = '../models/model.tf'):
     model = load_model(location)  # load the model from file
     return model

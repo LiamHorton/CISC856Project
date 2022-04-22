@@ -1,12 +1,13 @@
+# IMPORT LIBRARIES
+
 import glob
 import os
 import sys
 import numpy as np
 import cv2
 from queue import Queue
+from queue import Empty
 import random
-
-
 
 try:
     sys.path.append(glob.glob('../PythonAPI/carla/dist/carla-*%d.%d-%s.egg' % (
@@ -18,7 +19,7 @@ except IndexError:
 
 
 import carla
-from queue import Empty
+
 
 def sensor_callback(data, queue):
     """
@@ -46,21 +47,20 @@ def setup(time_step, img_x, img_y, speed = 0.2):
         except:
             print("Connection to server Failed")
 
-        spawn = random.choice([0,1,7,9,30,50,80])
+        # A vector of random spwan points within the map
+        #spawn = random.choice([0,1,7,9,30,50,80])
+        spawn = 0
 
         #setup Queues
         setup_queues = 1
         image_queue = Queue()
         collision_queue = Queue()
 
-
         # Get the world and its information
         setup_client_bp_world = 1
         world = client.get_world()
         bp_lib = world.get_blueprint_library()
         orig_settings = world.get_settings()
-
-
 
         # Configure the world
         configure_world = 1
@@ -70,20 +70,17 @@ def setup(time_step, img_x, img_y, speed = 0.2):
         configure_world = 1
         world.apply_settings(settings)
 
-
         # Get the required blueprints
         get_bp = 1
         vehicle_bp = bp_lib.filter('cybertruck')[0]
         camera_bp = bp_lib.filter('sensor.camera.rgb')[0]
         collision_bp = world.get_blueprint_library().find('sensor.other.collision')
 
-        # # Configure the blueprints
+        # Configure the blueprints
         conf_bp = 1
         camera_bp.set_attribute("image_size_x", str(img_x))
         camera_bp.set_attribute("image_size_y", str(img_y))
-        # Consider adding noise and blurring with enable_postprocess_effects
-
-
+        
         # Spawn our actors
         spawn_actors = 1
         vehicle = world.spawn_actor(blueprint=vehicle_bp, transform=world.get_map().get_spawn_points()[spawn])
@@ -163,16 +160,19 @@ def spawn_car(world, img_x = 128, img_y = 72, speed = 2):
     return vehicle, camera, collision, image_queue, collision_queue
 
 
+# Send a command to the CARLA Simulator and collect data
 def take_action(world, vehicle, image_queue, past_image, collision_queue, action):
     vehicle.apply_control(carla.VehicleControl(steer=action))
     world.tick()
     world.get_snapshot().frame
 
+    # Ensure and image is returned
     try:
         image_data = image_queue.get(True, 1.0)
     except Empty:
         image_data = past_image
     
+    # Determine if a collisions is observed
     try:
         collision_queue.get_nowait()
         collided = 1
@@ -182,9 +182,7 @@ def take_action(world, vehicle, image_queue, past_image, collision_queue, action
     return image_data, collided
 
 def close(world, camera, collision, vehicle, orig_settings):
-    # Apply the original settings when exiting.
-    # world.apply_settings(orig_settings)
-
+    
     # Destroy the actors in the scene.
     if camera:
         camera.destroy()
@@ -193,6 +191,7 @@ def close(world, camera, collision, vehicle, orig_settings):
     if collision:
         collision.destroy()
 
+# Create a stack of grayscale images.  If the image stakc is full pop the oldest one from the top and append a new one.
 def preprocess_img(img, img_stack):
     img_array = np.copy(np.frombuffer(img.raw_data, dtype=np.dtype("uint8")))
     img_array = np.reshape(img_array, (img.height, img.width, 4))
