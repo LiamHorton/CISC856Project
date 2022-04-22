@@ -4,6 +4,11 @@ Final project for CISC 856: Reinforcement learning
 
 -Simulation enviornment: Carla 0.9.13 (Town02 map)
 
+
+
+https://user-images.githubusercontent.com/55200321/164743063-cb935d9b-f250-41df-b89d-304fae8e7269.mp4
+
+
 <p align="center">
   <img src="images/report.png" />
    </br>
