@@ -10,6 +10,8 @@ Final project for CISC 856: Reinforcement learning
    a) Simulation enviornment b) On-board camera
 </p>
 
+## Abstract
+We implemented a reinforcement learning algorithm on a simulated vehicle to drive without collisions. This algorithm is a generalized version of model-free and model-based learning that allows for more robust systems which use aspects of both learning methods. By using a list of generated actions and an image taken from a simulated on-board camera, the probability of collision for each time step is generated and used to navigate through an unstructured environment. After implementing and testing the algorithm under different conditions, the model had difficulties learning and produced sub-optimal results. Some improvements for future work on the system were identified which are planned to be pursued by all group members.
 
 ## Code List
 ### RL_project_main.py
