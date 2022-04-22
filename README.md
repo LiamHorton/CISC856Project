@@ -11,7 +11,7 @@ Final project for CISC 856: Reinforcement learning
 </p>
 
 ## Abstract
-We implemented a self-supervised deep reinforcement learning algorithm on a simulated vehicle to learn a collision-free navigation policy. This algorithm is a generalized version of model-free and model-based learning that allows for more robust systems which use aspects of both learning methods. By using a list of generated actions and an image taken from a simulated on-board camera, the probability of collision for each time step is generated and used to navigate through an unstructured environment. After implementing and testing the algorithm under different conditions, the model had difficulties learning and produced sub-optimal results. Some improvements for future work on the system were identified which are planned to be pursued by all group members.
+We implemented a self-supervised deep reinforcement learning algorithm on a simulated vehicle to learn a collision-free navigation policy. This algorithm is a generalized version of model-free and model-based learning that allows for a more robust system which uses aspects of both learning techniques. By using a list of generated actions and an image taken from a simulated camera on-board the vehicle, the probability of collision for each time step is generated and used to navigate through an unstructured environment. After implementing and testing the algorithm under different conditions, the model had difficulties learning and produced sub-optimal results. Some improvements for future work on the system were identified which are planned to be pursued by all group members.
 
 ## Code List
 ### RL_project_main.py
