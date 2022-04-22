@@ -32,7 +32,8 @@ Code to implement the generalized computation which uses a Recurrent Neural Netw
 
 ## How to Run
 
-Markup : 1. Download CARLA Simulator from https://carla.org/ (The project was implemented using release 0.9.13 for Windows and 0.9.12 for Ubuntu)
+1. Download CARLA Simulator from https://carla.org/ (The project was implemented using release 0.9.13 for Windows and 0.9.12 for Ubuntu)
+    1. Ensure CARLA Simulator Python API requirements are met in your environment (check \CARLA_0.9.XX\PythonAPI\carla\requirments.txt)
 
 
 
