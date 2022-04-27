@@ -20,7 +20,7 @@ We implemented a self-supervised deep reinforcement learning algorithm on a simu
 
 ## Code List
 ### RL_project_main.py
-Main file used to 
+ 
 ### gcg.py
 Code to implement the generalized computation graph which uses a Recurrent Neural Network (RNN) for the task of collision avoidance over a short predictive horizon.
 
